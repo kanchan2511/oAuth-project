@@ -43,6 +43,9 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use("/api", protectedRoutes);
 
+app.get("/", (req,res) => {
+    res.send("OAuth API running");
+})
 
 const PORT = process.env.PORT || 5000;
 
