@@ -30,9 +30,11 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    proxy:true,
     cookie: {
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      sameSite: "none"
     }
   })
 );
@@ -42,6 +44,8 @@ app.use(passport.session());
 
 app.use("/auth", authRoutes);
 app.use("/api", protectedRoutes);
+
+app.set("trust proxy",1)
 
 app.get("/", (req,res) => {
     res.send("OAuth API running");
