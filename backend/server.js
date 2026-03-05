@@ -4,6 +4,7 @@ import session from "express-session";
 import passport from "passport";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import MongoStore from "connect-mongo";
 
 import connectDB from "./db.js";
 import "./passport.js";
@@ -31,10 +32,13 @@ app.use(
     resave: false,
     saveUninitialized: false,
     proxy:true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions"
+    }),
     cookie: {
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      sameSite: "none"
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     }
   })
 );

@@ -13,7 +13,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ googleId: profile.id });
+        let user = await User.findOneAndUpdate({ googleId: profile.id });
 
         if (!user) {
           user = await User.create({
@@ -36,7 +36,17 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+// passport.deserializeUser(async (id, done) => {
+//   const user = await User.findById(id);
+//   done(null, user);
+// });
+
+
 passport.deserializeUser(async (id, done) => {
-  const user = await User.findById(id);
-  done(null, user);
+  try {
+    const user = await User.findById(id).select("name email avatar");
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });

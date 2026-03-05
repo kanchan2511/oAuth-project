@@ -2,7 +2,7 @@ import passport from "passport"
 
 export const getMe = (req,res) => {
     if(!req.user){
-        return res.status(400).json({ authenticated: false })
+        return res.status(401).json({ authenticated: false })
     }
 
     res.json({
