@@ -1,26 +1,27 @@
 
-import { useEffect, useState } from "react";
 import API from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [message, setMessage] = useState("");
+  //const [message, setMessage] = useState("");
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchProtected = async () => {
-      try {
-        const res = await API.get("/api/dashboard");
-        setMessage(res.data.message);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const message = "Welcome to protected dashboard";
+  
 
-    fetchProtected();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProtected = async () => {
+  //     try {
+  //       const res = await API.get("/api/dashboard");
+  //       setMessage(res.data.message);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchProtected();
+  // }, []);
 
   const handleLogout = async () => {
     await logout();
